@@ -39,10 +39,17 @@ jobs:
           {name: 'qt-6.9.2 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
           {name: 'qt-6.9.2 windows', os: windows-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
           {name: 'qt-6.9.2 macos', os: macos-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
-          # Qt v6.11.0
-          {name: 'qt-6.11.0 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 11, 0], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
-          {name: 'qt-6.11.0 windows', os: windows-latest, build_type: Debug, qt_version: [6, 11, 0], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
-          {name: 'qt-6.11.0 macos', os: macos-latest, build_type: Debug, qt_version: [6, 11, 0], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
+          # Qt v6.10.3
+          # This is the newest version we can install on all three platforms: Qt split
+          # the Windows repository into per-architecture folders starting with 6.11
+          # (qt6_6110_msvc2022_64 instead of a flat qt6_6110), which aqtinstall cannot
+          # resolve yet - see https://github.com/miurahr/aqtinstall/issues/1007. 3.3.0 is
+          # its latest release and the issue is still open, so there is no newer
+          # aqtinstall to move to. 6.11+ installs fine on Linux and macOS; raise this
+          # once aqtinstall supports the new layout.
+          {name: 'qt-6.10.3 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 10, 3], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
+          {name: 'qt-6.10.3 windows', os: windows-latest, build_type: Debug, qt_version: [6, 10, 3], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
+          {name: 'qt-6.10.3 macos', os: macos-latest, build_type: Debug, qt_version: [6, 10, 3], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
           # shared libs
           {name: 'shared-libs ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'ON', tests: 'OFF', qtwidgets: 'ON'},
           {name: 'shared-libs windows', os: windows-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'ON', tests: 'OFF', qtwidgets: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
