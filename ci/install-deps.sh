@@ -27,8 +27,6 @@ mkdir -p deps && cd deps
 git clone --recursive https://github.com/sgieseking/anyrpc.git
 cd anyrpc && mkdir -p build && cd build
 if [ "$RUNNER_OS" = "Windows" ]; then
-    # No -G: let CMake pick the newest Visual Studio installed on the runner.
-    # Pinning a generator breaks whenever the windows-latest image ships a new VS.
     cmake ${CMAKE_INSTALL_PREFIX_ARG} -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE -DBUILD_EXAMPLES=OFF -DBUILD_WITH_LOG4CPLUS=OFF -DANYRPC_LIB_BUILD_SHARED=${SHARED_LIBS} ..
     cmake --build . --target install --config $CI_BUILD_TYPE
 else

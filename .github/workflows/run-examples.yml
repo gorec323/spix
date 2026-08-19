@@ -12,9 +12,8 @@ jobs:
       fail-fast: false
       matrix:
         base: [
-          # Qt versions are kept in sync with build.yml, see the comment on its matrix
-          # for why macOS needs Qt >= 6.9.2 and why Qt 5.15.2 has to stay on windows-2022.
           # Qt v5.15.2 (no macOS - Qt 5.15 lacks ARM64 support and macos-13 is deprecated)
+          # (windows-2022 - Qt 5.15 does not build with the VS 2026 of windows-latest)
           {name: 'qt-5.15.2 ubuntu', os: ubuntu-latest, build_type: Debug,qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'OFF', qtwidgets: 'OFF'},
           {name: 'qt-5.15.2 windows', os: windows-2022, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'OFF', qtwidgets: 'OFF', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
           # Qt v6.9.2
