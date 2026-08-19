@@ -17,18 +17,23 @@ jobs:
           # Qt v5.15.2 (no macOS - Qt 5.15 lacks ARM64 support and macos-13 is deprecated)
           {name: 'qt-5.15.2 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'OFF'},
           {name: 'qt-5.15.2 windows', os: windows-latest, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'OFF', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
-          # Qt v6.2.3
+          # Qt v6.2.3 (no macOS - see the macOS section below)
           {name: 'qt-6.2.3 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
           {name: 'qt-6.2.3 windows', os: windows-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
-          {name: 'qt-6.2.3 macos', os: macos-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
-          # Qt v6.5.0
+          # Qt v6.5.0 (no macOS - see the macOS section below)
           {name: 'qt-6.5.0 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 5, 0], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
           {name: 'qt-6.5.0 windows', os: windows-latest, build_type: Debug, qt_version: [6, 5, 0], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
-          {name: 'qt-6.5.0 macos', os: macos-latest, build_type: Debug, qt_version: [6, 5, 0], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
+          # macOS needs Qt >= 6.9.2. macos-latest is now macOS 26 (Tahoe), whose SDK
+          # dropped the legacy AGL framework. Older Qt builds still list `-framework AGL`
+          # in their link interface, so linking fails with "ld: framework 'AGL' not found".
+          # Fixed upstream in Qt 6.8.4 / 6.9.2 (QTBUG-137687); the open source aqt repos
+          # only go up to 6.8.3, which makes 6.9.2 the oldest version we can use here.
+          {name: 'qt-6.9.2 macos', os: macos-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
+          {name: 'qt-6.11.0 macos', os: macos-latest, build_type: Debug, qt_version: [6, 11, 0], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
           # shared libs
           {name: 'shared-libs ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'ON', tests: 'OFF', qtwidgets: 'ON'},
           {name: 'shared-libs windows', os: windows-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'ON', tests: 'OFF', qtwidgets: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
-          {name: 'shared-libs macos', os: macos-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'ON', tests: 'OFF', qtwidgets: 'ON'},
+          {name: 'shared-libs macos', os: macos-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'ON', tests: 'OFF', qtwidgets: 'ON'},
           # release build
           {name: 'release ubuntu', os: ubuntu-latest, build_type: Release, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
           # compilers
