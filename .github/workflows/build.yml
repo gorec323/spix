@@ -15,25 +15,26 @@ jobs:
       matrix:
         base: [
           # Qt v5.15.2 (no macOS - Qt 5.15 lacks ARM64 support and macos-13 is deprecated)
+          # (windows-2022 - Qt 5.15 does not build with the VS 2026 of windows-latest)
           {name: 'qt-5.15.2 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'OFF'},
-          {name: 'qt-5.15.2 windows', os: windows-latest, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'OFF', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
-          # Qt v6.2.3
-          {name: 'qt-6.2.3 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
-          {name: 'qt-6.2.3 windows', os: windows-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
-          {name: 'qt-6.2.3 macos', os: macos-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
-          # Qt v6.5.0
-          {name: 'qt-6.5.0 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 5, 0], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
-          {name: 'qt-6.5.0 windows', os: windows-latest, build_type: Debug, qt_version: [6, 5, 0], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
-          {name: 'qt-6.5.0 macos', os: macos-latest, build_type: Debug, qt_version: [6, 5, 0], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
+          {name: 'qt-5.15.2 windows', os: windows-2022, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'OFF', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
+          # Qt v6.9.2
+          {name: 'qt-6.9.2 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
+          {name: 'qt-6.9.2 windows', os: windows-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
+          {name: 'qt-6.9.2 macos', os: macos-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
+          # Qt v6.10.3 (newest aqtinstall can install on windows, see aqtinstall#1007)
+          {name: 'qt-6.10.3 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 10, 3], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
+          {name: 'qt-6.10.3 windows', os: windows-latest, build_type: Debug, qt_version: [6, 10, 3], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
+          {name: 'qt-6.10.3 macos', os: macos-latest, build_type: Debug, qt_version: [6, 10, 3], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
           # shared libs
-          {name: 'shared-libs ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'ON', tests: 'OFF', qtwidgets: 'ON'},
-          {name: 'shared-libs windows', os: windows-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'ON', tests: 'OFF', qtwidgets: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
-          {name: 'shared-libs macos', os: macos-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'ON', tests: 'OFF', qtwidgets: 'ON'},
+          {name: 'shared-libs ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'ON', tests: 'OFF', qtwidgets: 'ON'},
+          {name: 'shared-libs windows', os: windows-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'ON', tests: 'OFF', qtwidgets: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
+          {name: 'shared-libs macos', os: macos-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'ON', tests: 'OFF', qtwidgets: 'ON'},
           # release build
-          {name: 'release ubuntu', os: ubuntu-latest, build_type: Release, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
+          {name: 'release ubuntu', os: ubuntu-latest, build_type: Release, qt_version: [6, 9, 2], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON'},
           # compilers
-          {name: 'clang++ ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON', cmake_flags: '-DCMAKE_CXX_COMPILER=clang++', triplet: 'x64-linux'},
-          {name: 'g++ ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON', cmake_flags: '-DCMAKE_CXX_COMPILER=g++', triplet: 'x64-linux'},
+          {name: 'clang++ ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON', cmake_flags: '-DCMAKE_CXX_COMPILER=clang++', triplet: 'x64-linux'},
+          {name: 'g++ ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'OFF', tests: 'ON', qtwidgets: 'ON', cmake_flags: '-DCMAKE_CXX_COMPILER=g++', triplet: 'x64-linux'},
         ]
     steps:
       - name: Check out repository code
