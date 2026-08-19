@@ -12,13 +12,14 @@ jobs:
       fail-fast: false
       matrix:
         base: [
+          # Qt versions are kept in sync with build.yml, see the comment on its matrix
+          # for why macOS needs Qt >= 6.9.2 and why Qt 5.15.2 has to stay on windows-2022.
           # Qt v5.15.2 (no macOS - Qt 5.15 lacks ARM64 support and macos-13 is deprecated)
           {name: 'qt-5.15.2 ubuntu', os: ubuntu-latest, build_type: Debug,qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'OFF', qtwidgets: 'OFF'},
-          {name: 'qt-5.15.2 windows', os: windows-latest, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'OFF', qtwidgets: 'OFF', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
-          # Qt v6.2.3 (no macOS - see the macOS section below)
-          {name: 'qt-6.2.3 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'OFF', qtwidgets: 'ON'},
-          {name: 'qt-6.2.3 windows', os: windows-latest, build_type: Debug, qt_version: [6, 2, 3], shared_libs: 'OFF', tests: 'OFF', qtwidgets: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
-          # macOS needs Qt >= 6.9.2, see the matching comment in build.yml
+          {name: 'qt-5.15.2 windows', os: windows-2022, build_type: Debug, qt_version: [5, 15, 2], shared_libs: 'OFF', tests: 'OFF', qtwidgets: 'OFF', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
+          # Qt v6.9.2
+          {name: 'qt-6.9.2 ubuntu', os: ubuntu-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'OFF', tests: 'OFF', qtwidgets: 'ON'},
+          {name: 'qt-6.9.2 windows', os: windows-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'OFF', tests: 'OFF', qtwidgets: 'ON', cmake_flags: '"-DAnyRPC_ROOT=C:/Program Files (x86)/AnyRPC" "-DGTest_ROOT=C:/Program Files (x86)/googletest-distribution"'},
           {name: 'qt-6.9.2 macos', os: macos-latest, build_type: Debug, qt_version: [6, 9, 2], shared_libs: 'OFF', tests: 'OFF', qtwidgets: 'ON'},
         ]
     steps:
